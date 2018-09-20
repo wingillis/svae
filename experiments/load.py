@@ -28,7 +28,7 @@ def load(filename):
     return datadict
 
 def load_mice(N, file, labelfile=None, addnoise=True, keep=lambda x: True):
-    print 'loading data from {}...'.format(file)
+    print('loading data from {}...'.format(file))
     if labelfile is None:
         data = _load_mice(N, file, keep)
     else:
@@ -37,7 +37,7 @@ def load_mice(N, file, labelfile=None, addnoise=True, keep=lambda x: True):
     if addnoise:
         data += 1e-3 * npr.normal(size=data.shape)
 
-    print '...done loading {} frames!'.format(len(data))
+    print('...done loading {} frames!'.format(len(data)))
     if labelfile:
         return data, labels
     return data
@@ -74,7 +74,7 @@ def load_vae_init(zdim, file, eps=1e-5):
     (W_1, b_1), decoder_nnet_params = decoder_params[0], decoder_params[1:]
 
     if zdim < W_h.shape[1]:
-        raise ValueError, 'initialization zdim must not be greater than svae model zdim'
+        raise ValueError('initialization zdim must not be greater than svae model zdim')
     elif zdim > W_h.shape[1]:
         padsize = zdim - W_h.shape[1]
         pad = lambda W, b: \
@@ -86,8 +86,8 @@ def load_vae_init(zdim, file, eps=1e-5):
         pad = lambda W, b: (np.vstack((eps*npr.randn(padsize, W.shape[1]), W)), b)
         decoder_params = [pad(W_1, b_1)] + decoder_nnet_params
 
-        print 'loaded init from {} and padded by {} dimensions'.format(file, padsize)
+        print('loaded init from {} and padded by {} dimensions'.format(file, padsize))
         return encoder_params, decoder_params
 
-    print 'loaded init from {}'.format(file)
+    print('loaded init from {}'.format(file))
     return encoder_params, decoder_params

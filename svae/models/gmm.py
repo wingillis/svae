@@ -105,7 +105,7 @@ def meanfield_fixed_point(label_global, gaussian_globals, node_potentials, tol=1
         if abs(kl - prev_kl) < tol:
             break
     else:
-        print 'iteration limit reached'
+        print('iteration limit reached')
 
     return label_stats
 
@@ -131,7 +131,7 @@ def initialize_meanfield(label_global, node_potentials):
 
 def make_plotter_2d(recognize, decode, data, num_clusters, params, plot_every):
     import matplotlib.pyplot as plt
-    if data.shape[1] != 2: raise ValueError, 'make_plotter_2d only works with 2D data'
+    if data.shape[1] != 2: raise ValueError('make_plotter_2d only works with 2D data')
 
     fig, (observation_axis, latent_axis) = plt.subplots(1, 2, figsize=(8,4))
     encode_mean, decode_mean = make_encoder_decoder(recognize, decode)
@@ -152,7 +152,7 @@ def make_plotter_2d(recognize, decode, data, num_clusters, params, plot_every):
         elif isinstance(ax, plt.Line2D):
             ax.set_data(encoded_means.T)
         else:
-            raise ValueError
+            raise ValueError()
 
     def plot_ellipse(ax, alpha, mean, cov, line=None):
         t = np.linspace(0, 2*np.pi, 100) % (2*np.pi)

@@ -2,14 +2,14 @@ from __future__ import division
 import autograd.numpy as np
 import autograd.numpy.random as npr
 import autograd.scipy.linalg as spla
-from autograd.util import flatten
-from itertools import islice, imap, cycle
+from autograd.misc import flatten
+from itertools import islice, cycle
 import operator
 from functools import partial
 from toolz import curry
 
 # autograd internals
-from autograd.container_types import TupleNode, ListNode
+from autograd.builtins import SequenceVSpace
 from autograd.core import getval, primitive
 
 
@@ -122,12 +122,12 @@ def split_into_batches(data, seq_len, num_seqs=None, permute=True):
     if num_seqs is None:
         return batches, len(batches)
     chunks = (batches[i*num_seqs:(i+1)*num_seqs] for i in xrange(len(batches) // num_seqs))
-    return imap(np.stack, chunks), len(batches) // num_seqs
+    return map(np.stack, chunks), len(batches) // num_seqs
 
 
 ### basic math on (nested) tuples
 
-istuple = lambda x: isinstance(x, (tuple, TupleNode, list, ListNode))
+istuple = lambda x: isinstance(x, (tuple, list, SequenceVSpace))
 ensuretuple = lambda x: x if istuple(x) else (x,)
 concat = lambda *args: reduce(operator.add, map(ensuretuple, args))
 inner = lambda a, b: np.dot(np.ravel(a), np.ravel(b))

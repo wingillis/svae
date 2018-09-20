@@ -144,7 +144,7 @@ def make_figure():
 def save_figure(fig, filename):
     fig.savefig(filename + '.png', dpi=300, bbox_inches='tight', pad_inches=0)
     fig.savefig(filename + '.pdf', bbox_inches='tight', pad_inches=0)
-    print 'saved {}'.format(filename)
+    print('saved {}'.format(filename))
 
 def plot_data(data):
     fig, ax = make_figure()
@@ -204,7 +204,7 @@ def plot_gmm_svae(filename, data):
             try:
                 for _ in range(20000): gmm_svae_params = pickle.load(f)
             except EOFError: pass
-            else: print 'did not finish loading {}'.format(filename)
+            else: print('did not finish loading {}'.format(filename))
         return gmm_svae_params
 
     gmm_svae_params = load_gmm_svae_params(filename)
