@@ -27,7 +27,7 @@ if __name__ == "__main__":
     plt.ion()
 
     num_clusters = 5           # number of clusters in pinwheel data
-    samples_per_cluster = 100  # number of samples per cluster in pinwheel
+    samples_per_cluster = 130  # number of samples per cluster in pinwheel
     K = 15                     # number of components in mixture model
     N = 2                      # number of latent dimensions
     P = 2                      # number of observation dimensions
@@ -58,4 +58,4 @@ if __name__ == "__main__":
 
     # optimize
     params = sgd(gradfun(batch_size=50, num_samples=1, natgrad_scale=1e4, callback=plot),
-                 params, num_iters=1000, step_size=1e-3)
+                 params, num_iters=2200, step_size=1e-3)

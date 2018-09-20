@@ -2,7 +2,7 @@ from __future__ import division, print_function
 import autograd.numpy as np
 import autograd.numpy.random as npr
 from autograd import grad
-from autograd.util import make_tuple
+from autograd.builtins import tuple
 from functools import partial
 import sys
 
@@ -150,7 +150,7 @@ def get_arhmm_local_nodeparams(lds_global_natparam, lds_expected_stats):
 def get_hmm_vlb(lds_global_natparam, hmm_local_natparam, lds_expected_stats):
     init_params, pair_params, _ = hmm_local_natparam
     node_params = get_arhmm_local_nodeparams(lds_global_natparam, lds_expected_stats)
-    local_natparam = make_tuple(init_params, pair_params, node_params)
+    local_natparam = tuple((init_params, pair_params, node_params))
     return hmm_logZ(local_natparam)
 
 
@@ -162,7 +162,7 @@ def optimize_local_meanfield(global_natparam, node_potentials, tol=1e-2):
     lds_stats = initialize_local_meanfield(node_potentials)
     local_vlb = -np.inf
 
-    for _ in xrange(100):
+    for _ in range(100):
         hmm_natparam, hmm_stats, hmm_vlb = hmm_meanfield(hmm_global, lds_global, lds_stats)
         lds_natparam, lds_stats, lds_vlb = lds_meanfield(lds_global, node_potentials, hmm_stats)
 
@@ -181,7 +181,7 @@ def optimize_local_meanfield_withlabels(global_natparam, node_potentials, labels
 
     def count_transitions(labels):
         return np.vstack(
-            [np.bincount(labels[1:][labels[:-1] == i], minlength=N) for i in xrange(N)])
+            [np.bincount(labels[1:][labels[:-1] == i], minlength=N) for i in range(N)])
 
     def indicators(labels):
         return np.eye(N)[labels]

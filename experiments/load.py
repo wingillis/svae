@@ -1,7 +1,7 @@
 from __future__ import division
 import numpy as np
 import numpy.random as npr
-import cPickle as pickle
+import _pickle as pickle
 import gzip
 import h5py
 import operator as op
@@ -43,7 +43,7 @@ def load_mice(N, file, labelfile=None, addnoise=True, keep=lambda x: True):
     return data
 
 def _load_mice(N, file, keep):
-    datadict = dmap(load(filename), standardize, keep)
+    datadict = dmap(load(file), standardize, keep)
     return flatten_dict(datadict)
 
 def _load_mice_withlabels(N, file, labelfile, keep):

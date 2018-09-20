@@ -1,7 +1,7 @@
 from __future__ import division
 import numpy as np
 import numpy.random as npr
-import cPickle as pickle
+import _pickle as pickle
 import matplotlib.pyplot as plt
 from itertools import count
 from cycler import cycler
@@ -10,7 +10,8 @@ from scipy.stats import norm
 from operator import itemgetter
 from functools import partial
 
-from gmm_svae_synth import decode as gmm_decode, make_pinwheel_data, normalize, \
+from svae.util import normalize
+from svae.experiments.gmm_svae_synth import decode as gmm_decode, make_pinwheel_data, \
     dirichlet, niw, encode_mean, decode_mean
 from svae.forward_models import mlp_decode
 mlp_decode = partial(mlp_decode, tanh_scale=1000., sigmoid_output=False)

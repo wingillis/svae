@@ -38,13 +38,13 @@ def gaussian_mean(inputs, sigmoid_mean=False):
     mu_input, sigmasq_input = np.split(inputs, 2, axis=-1)
     mu = sigmoid(mu_input) if sigmoid_mean else mu_input
     sigmasq = log1pexp(sigmasq_input)
-    return tuple(mu, sigmasq)
+    return tuple((mu, sigmasq))
 
 @curry
 def gaussian_info(inputs):
     J_input, h = np.split(inputs, 2, axis=-1)
     J = -1./2 * log1pexp(J_input)
-    return tuple(J, h)
+    return tuple((J, h))
 
 
 ### multi-layer perceptrons (MLPs)
@@ -96,12 +96,12 @@ def _gresnet(mlp_type, mlp, params, inputs):
         mu_mlp, sigmasq_mlp = mlp(mlp_params, inputs)
         mu_res = unravel(np.dot(ravel(inputs), W) + b1)
         sigmasq_res = log1pexp(b2)
-        return tuple(mu_mlp + mu_res, sigmasq_mlp + sigmasq_res)
+        return tuple((mu_mlp + mu_res, sigmasq_mlp + sigmasq_res))
     else:
         J_mlp, h_mlp = mlp(mlp_params, inputs)
         J_res = -1./2 * log1pexp(b2)
         h_res = unravel(np.dot(ravel(inputs), W) + b1)
-        return tuple(J_mlp + J_res, h_mlp + h_res)
+        return tuple((J_mlp + J_res, h_mlp + h_res))
 
 def init_gresnet(d_in, layer_specs):
     d_out = layer_specs[-1][0] // 2

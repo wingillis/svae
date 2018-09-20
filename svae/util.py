@@ -121,7 +121,7 @@ def split_into_batches(data, seq_len, num_seqs=None, permute=True):
     batches = npr.permutation(flatmap(split_array(length=seq_len), data))
     if num_seqs is None:
         return batches, len(batches)
-    chunks = (batches[i*num_seqs:(i+1)*num_seqs] for i in xrange(len(batches) // num_seqs))
+    chunks = (batches[i*num_seqs:(i+1)*num_seqs] for i in range(len(batches) // num_seqs))
     return map(np.stack, chunks), len(batches) // num_seqs
 
 

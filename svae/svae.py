@@ -25,7 +25,9 @@ def make_gradfun(run_inference, recognize, loglike, pgm_prior, data,
 
     def gradfun(params, i):
         pgm_params, loglike_params, recogn_params = params
-        objective = lambda loglike_params, recogn_params: -mc_elbo(pgm_params, loglike_params, recogn_params, i)
+        def objective(params):
+            loglike_params, recogn_params = params
+            return -mc_elbo(pgm_params, loglike_params, recogn_params, i)
         val, (loglike_grad, recogn_grad) = vgrad(objective)((loglike_params, recogn_params))
         # this expression for pgm_natgrad drops a term that can be computed using
         # the function autograd.misc.fixed_points.fixed_point
